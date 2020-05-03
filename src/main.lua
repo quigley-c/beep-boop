@@ -9,11 +9,16 @@ function love.load()
 
 	love.window.setFullscreen(false)
 
+	camera = {x, y, zoom}
 	player = { x, y, spd, img}
 
-	player.x = player.x or 100
-	player.y = player.y or 100
-	player.spd = player.speed or 60
+	camera.x = camera.x or 0
+	camera.y = camera.y or 0
+	camera.zoom = camera.zoom or 0.5
+
+	player.x = player.x or 150
+	player.y = player.y or 150
+	player.spd = player.speed or 150
 
 	image = love.graphics.newImage("player.png")
 	animation = new_animation(love.graphics.newImage("player.png"), 32, 32, 1)
@@ -66,6 +71,9 @@ end
 
 
 function love.draw()
+
+	love.graphics.scale(1 / camera.zoom, 1 / camera.zoom)
+
 	local cur_frame = math.floor(animation.currentTime / animation.duration * #animation.quads) + 1
 	love.graphics.draw(animation.spriteSheet, animation.quads[cur_frame],  player.x, player.y)
 
